@@ -67,27 +67,50 @@ def drop_item(item)
 
 end
 
-def walk_to(destination)
+#def walk_to(destination)
+ #   $room = destination
+#end
+
+def rooms(destination)
     $room = destination
+    if room == "bedroom"
+        puts "You are in the bedroom. Here you have your bed and your diary."
+    elsif room == "kitchen"
+        puts "You are in the kitchen. Here you can find your food-supply."
+    elsif room == "livingroom"
+        puts "You are in the living room."
+    elsif room == "controlroom"
+        puts "You are in the control-room. Here you can control the ship, as well as receiving and sending messages. "
+    elsif room == "bathroom"
+        puts "You are in the bathroom. Here you can find your medicine-supply."
+    end
 end
 
+
 def listener
-    if gets.chomp == 'eat'
+    user_input = gets.chomp
+    if user_input == 'eat'
         eat()
-    end
-    if gets.chomp == 'sleep'
+    elsif user_input == 'sleep'
         good_night()
-    end
-    if gets.chomp == 'q'
+    elsif user_input.split.length > 1
+        verb = action_verb(user_input)
+        noun = action_noun(user_input)
+        if verb == "walk"
+            rooms(noun)
+        end
+    elsif user_input == 'q'
         exit
     end
 
 end
 
+
 update do 
     listener
     if $day==0
         intro
+        listener
     elsif $day==1
 
     elsif $day==2
