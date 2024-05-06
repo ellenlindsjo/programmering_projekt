@@ -1,0 +1,5 @@
+Bedroom: Here you have your bed and your diary. 
+Kitchen: Here you can find your food supply.
+Livingroom
+Controlroom: Here you can control the ship, as well as receiving and sending messages.
+Bathroom: Here you can find your medicine supply.
