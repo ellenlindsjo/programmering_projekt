@@ -1,2 +1,7 @@
 chewinggum
 waterbottle
+ducttape
+screwdriver
+spaghetti
+rubberduck
+banana

@@ -6,6 +6,7 @@ $game_started = true
 $times_slept = 0
 $times_eaten = 0
 $opened_instructions = false
+$correct_course = 2
 
 def intro
     i=10
@@ -411,7 +412,11 @@ def mission6
     user_input = gets.chomp
     i = 0
     while user_input != "fire" && i<=3
-        puts "Wrong answer, two tries left"
+        if i==1
+            puts "Wrong answer, two tries left"
+        elsif i==2
+            puts "Wrong answer, one try left"
+        end
         user_input = gets.chomp
         if i==1
             puts "Hint: It's important for survival."
@@ -560,7 +565,8 @@ def mission8
     puts "west"
     while user_input != "east"
         start = Time.now
-        user_input = gets.chomp stop = Time.now
+        user_input = gets.chomp 
+        stop = Time.now
         if stop-start > 5
             puts "*BONK*"
             puts "You got hit!"
@@ -656,7 +662,151 @@ def mission10
 end
 
 def mission11
+    puts "You're starting to feel a little bit dizzy."
+    puts "It seems like the oxygen level is unusually low."
+    while $room != "controlroom"
+        listener
+    end
+    puts "The primary oxygen tank has almost run out and needs to be replaced."
+    puts  "Behind it is the spare one. Plug out the empty one and put them in the new tank."
+    puts "There are three color coded cables that have to be plugged in in alphabetical order."
+    puts "The color labels have been all mixed up."
+    puts "'grapeyinnvoko'"
+    puts "Choose which cables to re-plug (written with a space between each word):"
+    user_input = gets.chomp
+    i = 0
+    while user_input != "navy orange pink" && i<=3
+        user_input = gets.chomp
+        i+=1
+        if i==3
+            puts "The oxygen ran out..."
+            dead
+        end
+    end
+    puts "You take a deep breath. The tanks have successfully been switched."
+end
 
+def mission12
+    puts "*BONK BONK*"
+    puts "Not again!"
+    puts "A new meteor rain is approaching. Prepare to steer the ship away from them!"
+    while $room != "controlroom"
+        listener
+    end
+    #meteor 1
+    puts "south"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "north"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 2
+    puts "west"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "east"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 3
+    puts "south"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "north"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 4
+    puts "east"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "west"
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+
+    #meteor 5
+    puts "south"
+    while user_input != "north"
+        start = Time.now
+        user_input = gets.chomp stop = Time.now
+        if stop-start > 5
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    puts "Nice! You made it through another meteor rain."
+    puts "Hopefully, it was the last one."
+end
+
+def mission13 
+    puts "You look outside the window and see a huge sphere before you."
+    puts "Wow, that must be the aliens' planet!"
+    puts "You have gotten a new message from the aliens."
+    while $room != controlroom
+        listener
+    end
+    puts "We see that you are nearby now and can see our planet."
+    puts "Which one of the primary- or their complementary colours is our planet?"
+    $color = gets.chomp
+    puts "Okay..."
 end
 
 #om fel kurs
@@ -672,7 +822,62 @@ def extra_mission1
     end
 end
 
+def miss_planet
+    puts "You drift closer and closer to the aliens' planet, but."
+    puts "Suddenly you realize that you set the wrong course alll those days ago, and that now you won't be able to get to the aliens."
+    puts "What a waste of time..."
+    puts "You drift off into complete darkness..."
+    puts "After a few days the food runs out..."
+    puts "Some hours after that there's no more oxygen left..."
+    dead
+end
 
+def black_hole
+    puts "This doesn't feel right...It almost feels like the spaceship is being pulled towards something"
+    puts "OH NO! It's a black ho-"
+    dead
+end
+
+def arrive
+    puts "The spaceship turns slightly as you can see the planet getting closer and closer."
+    puts "You have gone into orbit and start preparing to enter the atmosphere."
+    puts "*ROAROOOMMMM!*"
+    puts "There's fire outside the windows as velocity increases."
+    puts "*WHOOOOOSSHH!*"
+    puts "The #{$color} surface is approaching rapidly and you begin to wonder what you'll actually find down there."
+    puts "If you make the landing, that is."
+    puts "*BEEP BEEP*"
+    puts "Various warning sounds and lights are on, but now there's nothing left do to but hope."
+    if $color == "red" || $color == "yellow" || $color == "blue"
+        puts "Yes! You managed to dock on the new planet."
+        puts "You get ready to present yourself to the aliens."
+        puts "You walk out of your spaceship and go up to the aliens."
+        puts "'Hello, I'm from planet Earth' you say."
+        puts "But the aliens don't respond directly..."
+        puts "And they don't look very kind..."
+        puts "All of a sudden they grab ahold of you and drag you away from your ship!"
+        puts "You struggle, realising that the aliens never wanted to help you."
+        puts "They were only out to hurt you!"
+        puts "As they throw you into a cell you think about how humanity could ever be so gullible."
+        dead
+    elsif $color == "green"
+        puts "You brace for landing, waiting for the ship to slow down."
+        puts "But the ship is not slowing down..."
+        puts "It really should have slowed down by now..."
+        puts "CRASH!!!"
+        dead
+    elsif $color == "orange" || $color == "purple"
+        puts "Yes! You managed to dock on the new planet."
+        puts "You get ready to present yourself to the aliens."
+        puts "You walk out of your spaceship and go up to the aliens."
+        puts "'Hello, I'm from planet Earth' you say."
+        puts "'Hello, we are so excited to meet you!' an alien responded warmly."
+        puts "You were led to a modern office and exchange knowledge that can save both the aliens and humans."
+        puts "THE END"
+        puts "Credits:"
+        puts "Ellen, Stella, Klara (2B)"
+    end     
+end
 
 def dead
     puts "You died."
@@ -680,6 +885,8 @@ def dead
     $game_started = false
     exit
 end
+
+
 
 def listener
     user_input = gets.chomp
@@ -776,7 +983,7 @@ while $game_started == true
     elsif $day==4
         mission7
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
-        while $times_eaten == 1
+        while $times_eaten == 3
             p "waiting"
             listener
         end
@@ -792,7 +999,7 @@ while $game_started == true
     elsif $day==5
         mission10
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
-        while $times_eaten == 1
+        while $times_eaten == 4
             p "waiting"
             listener
         end
@@ -803,32 +1010,32 @@ while $game_started == true
             listener
         end
     elsif $day==6
-        mission12
+        if $hit
+            mission12
+        else
+            mission13
+        end
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
-        while $times_eaten == 1
+        while $times_eaten == 5
             p "waiting"
             listener
         end
-        mission13
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         while $times_slept == 6
             p "waiting"
             listener
         end
     elsif $day==7
-        mission14
-        puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
-        while $times_eaten == 1
-            p "waiting"
-            listener
-        end
-        mission15
-        puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
-        while $times_slept == 6
-            p "waiting, last day"
-            listener
+        puts "When you wake up, you realize that it's the last day of your trip. Soon you'll be meeting the aliens."
+        if $course == false
+            if ($course_value-$correct_course).abs < 10
+                miss_planet
+            else
+                black_hole
+            end
+        else
+            arrive
         end
     end
     listener
 end
-
