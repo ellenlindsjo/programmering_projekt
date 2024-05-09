@@ -28,7 +28,7 @@ def intro
         sleep(2)
         puts "For example: 'walk bedroom' and 'walk to the bedroom' will take you to the bedroom. 'grab pen' adds 'pen' to your inventory. 'drop pen' removes 'pen' from your inventory."
         sleep(2)
-        puts "Enter 'open inventory' to open inventory"
+        puts "Enter 'show inventory' to show inventory"
     elsif continue == "q"
         $game_started = false
         exit
@@ -106,8 +106,8 @@ def action_noun(prompt)
 end
 
 def grab_item(item)
-    if File.readlines("inventory.txt").length <= 7
-        File.open("programmering_projekt/inventory.txt", "a"){|f| f.write(item)}
+    if File.readlines("programmering_projekt/inventory.txt").length <= 7
+        File.open("programmering_projekt/inventory.txt", "a"){|f| f.write(item,"\n")}
     else
         puts "Your inventory is full."
     end
@@ -180,6 +180,7 @@ end
 
 def open_instructions
     puts File.read('programmering_projekt/instructions.txt')
+    $opened_instructions = true
 end
 
 #funktioner för uppdrag
@@ -236,6 +237,7 @@ def mission3
 end
 
 #fixa strömmen
+#sker efter man äter, inte efter man sover, så kanske inte ska ha waking up i texten
 def mission4
     puts "You're waking up to complete darkness. The power has gone out!"
     sleep(0.3)
@@ -248,10 +250,29 @@ def mission4
         while $opened_instructions == false
             listener
         end
+        times_wrong = 0
         user_input = gets.chomp
         while user_input != "3J8JKO"
             puts "Wrong! Try again"
+            times_wrong += 1
             user_input = gets.chomp
+        end
+        $opened_instructions = false
+        if times_wrong >= 3
+            puts "Hmm... The power still isn't on. Maybe check the other rooms for other broken cables."
+            while $room != "livingroom"
+                listener
+            end
+            puts "There seems to be a broken cable in here as well. You need to fix it."
+            puts "It is not the same colour as the cable in the controlroom. You need to check the instruction book again."
+            while $opened_instructions == false
+                listener
+            end
+            user_input = gets.chomp
+            while user_input != "903KH6"
+                puts "Wrong! Try again"
+                user_input = gets.chomp
+            end
         end
         puts "Nice! The power is back on"
     else
@@ -307,7 +328,7 @@ def mission5
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
-    while inventory_arr.contain("screwdriver") == false
+    while inventory_arr.include?("screwdriver\n") == false
         not_in_inventory = true
         puts "You don't have a screwdriver, you should go and get it."
         while $room != "livingroom"
@@ -333,7 +354,7 @@ def mission5
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
-    while inventory_arr.contain("spaghetti") == false
+    while inventory_arr.include?("spaghetti\n") == false
         not_in_inventory = true
         puts "You don't have the spaghetti, you should go and get it."
         while $room != "livingroom"
@@ -359,7 +380,7 @@ def mission5
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
-    while inventory_arr.contain("ducttape") == false
+    while inventory_arr.include?("ducttape\n") == false
         not_in_inventory = true
         puts "You don't have ducttape, you should go and get it."
         while $room != "livingroom"
@@ -381,13 +402,264 @@ def mission5
 end
 
 def mission6
-    puts "There's a new message from the aliens! Hurry to the control room to view it.
-    
-    while     puts "I'm not alive, but I can grow. I don't have lungs, but I need air. I don't have a mouth, but water kills me. What am I?"
+    puts "There's a new message from the aliens! Hurry to the control room to view it."
+    while $room != "controlroom"
+        listener
+    end
+    puts "I'm not alive, but I can grow. I don't have lungs, but I need air. I don't have a mouth, but water kills me. What am I?"
+    puts "You have three tries"
+    user_input = gets.chomp
+    i = 0
+    while user_input != "fire" && i<=3
+        puts "Wrong answer, two tries left"
+        user_input = gets.chomp
+        if i==1
+            puts "Hint: It's important for survival."
+        elsif i==2
+            puts "Hint: The answer is one of the four elements."
+        elsif i==3
+            puts "*PEW PEW*"
+            puts "You failed and the aliens shot laser at your spaceship"
+            dead
+        end
+        i+=1
+    end
+    puts "Fire! That's correct!"
+end
+
+def mission7
+    puts "Ouch! You accidently cut your arm on a rusty nail sticking out out the wall."
+    puts "You'll probably need a band-aid. Where are those again?"
+    while $room != "bathroom"
+        listener
+    end
+    puts "First, to make sure the cut is clean you wash your arm."
+    puts "Now hurry to grab a band-aid from the medicine cabinet before the cut gets infected!"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "open cabinet"
+        user_input = gets.chomp
+    end
+    stop = Time.now
+    if stop-start > 30
+        puts "You were too slow and the cut got infected."
+        dead
+    end
+    puts "Phew, that was close.."
+    puts "Now quick! Grab the band-aid"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "grab band-aid"
+        user_input = gets.chomp
+    end
+    stop = Time.now
+    if stop-start > 30
+        puts "You were too slow and the cut got infected."
+        dead
+    end
+    puts "Great!"
+    puts "You managed to avoid getting tetanus!"
+end
+
+def mission8
+    times_hit = 0
+    puts "Suddenly you feel the spaceship starting to shake..."
+    puts "*BONK*"
+    puts "What was that?"
+    puts "*BONK BONK*"
+    puts "IT'S A METEOR RAIN!"
+    puts "You have to manually steer the ship to avoid getting hit!"
+    while $room != "controlroom"
+        listener
+    end
+    puts "The meteors are coming from different directions."
+    puts "When from north, steer south, and vice versa"
+    puts "When from east, steer west, and vice versa"
+    sleep(5)
+    #meteor 1
+    puts "east"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "west"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 2
+    puts "north"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "south"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 3
+    puts "south"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "north"
+        stop = Time.now
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    #meteor 4
+    puts "south"
+    start = Time.now
+    user_input = gets.chomp
+    while user_input != "north"
+        if stop-start > 10
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+
+    #meteor 5
+    puts "west"
+    while user_input != "east"
+        start = Time.now
+        user_input = gets.chomp stop = Time.now
+        if stop-start > 5
+            puts "*BONK*"
+            puts "You got hit!"
+            puts "Try to avoid that"
+            times_hit +=1  
+        end
+        if times_hit >= 3
+            puts "Oh no! To many meteors have damaged the ship!"
+            puts "*KABOOM*"
+            dead
+        end
+        user_input = gets.chomp
+        start = Time.now
+    end
+    puts "Good job! You made it through the meteor rain."
+    if times_hit > 0
+        $hit = true
+    end
+end
+
+def mission9
+    puts "Since you were hit by the meteors it seems like something is broken. Go look for it."
+    while $room != "kitchen"
+        listener
+    end
+    puts "There's a weirdly-shaped hole in the wall and your food is flying out into space."
+    puts "Is there something that you can plug the hole with?"
+    user_input = gets.chomp
+    while user_input != "rubberduck"
+        puts "Wrong item"
+        user_input = gets.chomp
+    end
+    inventory_arr = File.readlines('programmering_projekt/inventory.txt')
+    while inventory_arr.include?("rubberduck\n") == false
+        not_in_inventory = true
+        puts "You don't have a rubberduck, you should go and get it."
+        while $room != "livingroom"
+            listener
+        end
+        listener
+    end
+    if not_in_inventory
+        puts "Now maybe you have the right item. Go back and test it."
+        while $room != "kitchen"
+            listenerr
+        end
+        user_input = gets.chomp
+        while user_input != "rubberduck"
+            puts "Wrong item"
+            user_input = gets.chomp
+        end
+    end
+    puts "Perfect fit! Who knew the rubberduck would save the day?"
+end
+
+def mission10
+    puts "The aliens wants to test your knowledge and have sent some questions for you. Write your answers in numbers."
+    while $room != "controlroom"
+        listener
+    end
+    puts "Question 1: What is the value of π (pi) rounded to two decimal places?"
+    user_input = gets.chomp
+    if user_input != "3.14"
+        dead
+    else
+        puts "Correct!"
+    end
+    puts "Question 2: What is the square root of 144?"
+    user_input = gets.chomp
+    if user_input != "12"
+        dead
+    else
+        puts "Correct!"
+    end
+
+    if $hit
+        puts "Question 3: What is the sum of the interior angles of a rectangle?"
+        user_input = gets.chomp
+        if user_input != "360"
+            dead
+        else
+            puts "Correct!"
+        end
+        puts "Question 4: solve for x '(x-3)^2=0'"
+        user_input = gets.chomp
+        if user_input != "3"
+            dead
+        else
+            puts "Correct!"
+        end
+    end
+    puts "The aliens are happy with your knowledge!"
+end
+
+def mission11
+
 end
 
 #om fel kurs
-
 def extra_mission1
     puts "Another day, another message from earth: 'It seams like the course you set was wrong! Fortunetly you get another chance by answering this equation: (x^2)^(1/2) = 4'"
     user_input = gets.chomp
@@ -453,7 +725,7 @@ def listener
 end
 
 
-while $game_started = true
+while $game_started == true
     p "in the whle llop"
     if $day==0
         intro
@@ -509,45 +781,48 @@ while $game_started = true
             listener
         end
         mission8
+        if $hit 
+            mission9
+        end
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         while $times_slept == 4
             p "waiting"
             listener
         end
     elsif $day==5
-        mission9
+        mission10
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
         while $times_eaten == 1
             p "waiting"
             listener
         end
-        mission10
+        mission11
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         while $times_slept == 5
             p "waiting"
             listener
         end
     elsif $day==6
-        mission11
+        mission12
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
         while $times_eaten == 1
             p "waiting"
             listener
         end
-        mission12
+        mission13
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         while $times_slept == 6
             p "waiting"
             listener
         end
     elsif $day==7
-        mission13
+        mission14
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
         while $times_eaten == 1
             p "waiting"
             listener
         end
-        mission14
+        mission15
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         while $times_slept == 6
             p "waiting, last day"
