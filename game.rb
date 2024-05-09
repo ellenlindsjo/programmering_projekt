@@ -82,13 +82,35 @@ def action_noun(prompt)
         return "diary"
     elsif noun == "instructions"
         return "instructions"
+    elsif noun == "hammer"
+        return "hammer"
+    elsif noun == "screwdriver"
+        return "screwdriver"
+    elsif noun == "crowbar"
+        return "crowbar"
+    elsif noun == "rubberduck"
+        return "rubberduck"
+    elsif noun == "saw"
+        return "saw"
+    elsif noun == "banana"
+        return "banana"
+    elsif noun == "spaghetti"
+        return "spaghetti"
+    elsif noun == "ducttape"
+        return "ducttape"
+    elsif noun == "catfood"
+        return "catfood"
     else
         #fel input
     end
 end
 
 def grab_item(item)
-    File.open("programmering_projekt/inventory.txt", "a"){|f| f.write(item)}
+    if File.readlines("inventory.txt").length <= 7
+        File.open("programmering_projekt/inventory.txt", "a"){|f| f.write(item)}
+    else
+        puts "Your inventory is full."
+    end
 end
 
 def drop_item(item)
@@ -246,12 +268,126 @@ def mission5
     while $room != "livingroom"
         listener
     end
-    
-
-
+    puts "You need a code to unlock the toolbox."
+    listener
+    user_input = gets.chomp
+    while user_input != "8595"
+        user_input = gets.chomp
+    end
+    puts "Here's the toolbox:"
+    puts "Hammer"
+    puts "Screwdriver" #behövs
+    puts "Crowbar"
+    puts "Rubberduck"
+    puts "Saw"
+    puts "Banana"
+    puts "Spaghetti" #behövs
+    puts "Ducttape" #behövs
+    puts "Catfood"
+    puts "You can pick up five things to put in your inventory. When you have everything you need, write 'close' to close the toolbox"
+    listener
+    listener
+    listener
+    listener
+    listener
+    puts "Your inventory is full!"
+    user_input = gets.chomp
+    while user_input != "close"
+        user_input = gets.chomp
+    end
+    puts "Go to the controlroom to begin your spacewalk"
+    while $room != "controlroom"
+        listener
+    end
+    puts "While in the controlroom, you put on your spacesuit and prepare yourself for the mission. Then you start making your way towards the top of the spaceship, as the endless darkness surrounds you."
+    puts "There are a few loose screws at the bottom of the antenna. Use the appropriate tool to fix it"
+    user_input = gets.chomp
+    while user_input != "screwdriver"
+        puts "Wrong item"
+        user_input = gets.chomp
+    end
+    inventory_arr = File.readlines('programmering_projekt/inventory.txt')
+    while inventory_arr.contain("screwdriver") == false
+        not_in_inventory = true
+        puts "You don't have a screwdriver, you should go and get it."
+        while $room != "livingroom"
+            listener
+        end
+        listener
+    end
+    if not_in_inventory
+        puts "You put your spacesuit back on and head outside."
+        puts "Now maybe you have the right tool."
+        user_input = gets.chomp
+        while user_input != "screwdriver"
+            puts "Wrong item"
+            user_input = gets.chomp
+        end
+    end
+    not_in_inventory = false
+    puts "Good work!"
+    puts "However, the top of the antenna seems to be broken as well... maybe you have something that could replace it?"
+    user_input = gets.chomp
+    while user_input != "spaghetti"
+        puts "Wrong item"
+        user_input = gets.chomp
+    end
+    inventory_arr = File.readlines('programmering_projekt/inventory.txt')
+    while inventory_arr.contain("spaghetti") == false
+        not_in_inventory = true
+        puts "You don't have the spaghetti, you should go and get it."
+        while $room != "livingroom"
+            listener
+        end
+        listener
+    end
+    if not_in_inventory
+        puts "You put your spacesuit back on and head outside."
+        puts "Now maybe you have the right tool."
+        user_input = gets.chomp
+        while user_input != "spaghetti"
+            puts "Wrong item"
+            user_input = gets.chomp
+        end
+    end
+    not_in_inventory = false
+    puts "Who knew spaghetti could be so useful?"
+    puts "Now you need something to attach it with."
+    user_input = gets.chomp
+    while user_input != "ducttape"
+        puts "Wrong item"
+        user_input = gets.chomp
+    end
+    inventory_arr = File.readlines('programmering_projekt/inventory.txt')
+    while inventory_arr.contain("ducttape") == false
+        not_in_inventory = true
+        puts "You don't have ducttape, you should go and get it."
+        while $room != "livingroom"
+            listener
+        end
+        listener
+    end
+    if not_in_inventory
+        puts "You put your spacesuit back on and head outside."
+        puts "Now maybe you have the right item."
+        user_input = gets.chomp
+        while user_input != "ducttape"
+            puts "Wrong item"
+            user_input = gets.chomp
+        end
+    end
+    puts "*beep beep*"
+    puts "The antenna is now working again!"
 end
 
-#om fel kurs på dag 1
+def mission6
+    puts "There's a new message from the aliens! Hurry to the control room to view it.
+    
+    while     puts "I'm not alive, but I can grow. I don't have lungs, but I need air. I don't have a mouth, but water kills me. What am I?"
+end
+
+#om fel kurs
+
 def extra_mission1
     puts "Another day, another message from earth: 'It seams like the course you set was wrong! Fortunetly you get another chance by answering this equation: (x^2)^(1/2) = 4'"
     user_input = gets.chomp
@@ -263,6 +399,8 @@ def extra_mission1
         $course_retry_value = user_input.to_i
     end
 end
+
+
 
 def dead
     puts "You died."
