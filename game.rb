@@ -1,7 +1,6 @@
 #variables
 $day = 0
-$health = 100
-$problems_solved = []
+$problems_solved = [] #ska vi använda?
 $game_started = true
 $times_slept = 0
 $times_eaten = 0
@@ -18,8 +17,11 @@ def intro
     puts "LIFTOFF!"
     sleep 1
     puts "Welcome to 'game'!"
-    puts "press 'enter' to continue or 'q' and 'enter' to quit the game"
-    continue = gets.chomp
+    continue = 0
+    while continue != "" && continue != "q"
+        puts "press 'enter' to continue or 'q' and 'enter' to quit the game"
+        continue = gets.chomp
+    end
     if continue == ""
         puts "Enter your name:"
         $name = gets.chomp
@@ -59,11 +61,10 @@ def action_verb(prompt)
     elsif verb == "open"
         return "open"
     else 
-        #fel input
+        puts "#{verb} is not an action you can use. Please write a valid verb and make sure it's the first word."
     end
 end
 
-#Vi måste lägga in alla items som vi använder här i
 def action_noun(prompt)
     arr = prompt.split
     noun = arr[arr.length-1]
@@ -102,7 +103,7 @@ def action_noun(prompt)
     elsif noun == "catfood"
         return "catfood"
     else
-        #fel input
+        puts "#{noun} is not an item you can use. Please write a valid noun and make sure it's the last word."
     end
 end
 
@@ -142,6 +143,8 @@ def rooms(destination)
         puts "You are in the control room. Here you can control the ship, as well as receiving and sending messages. "
     elsif $room == "bathroom"
         puts "You are in the bathroom. Here you can find your medicine supply."
+    else 
+        puts "#{$room} is not a room that you can walk to."
     end
 end
 
@@ -160,10 +163,9 @@ end
 
 def eat
     puts "Nom nom..."
-    sleep(3)
+    sleep(2)
     puts "Yum!"
     sleep(2)
-    $health = 100
     $times_eaten += 1
 end
 
@@ -192,6 +194,10 @@ end
 def mission1
     puts "The first thing you notice as you leave the atmosphere is a message from earth: “Dear #{$name}, make sure to set the right course for the spaceship by entering the right answer to this equation: 2x + 3 = 7”"
     user_input = gets.chomp
+    while user_input.to_i.to_s != user_input
+        puts "Please write a number, integer or float."
+        user_input = gets.chomp
+    end
     if user_input == "2"
         $course = true
         $course_value = 2
@@ -238,47 +244,45 @@ def mission3
 end
 
 #fixa strömmen
-#sker efter man äter, inte efter man sover, så kanske inte ska ha waking up i texten
 def mission4
-    puts "You're waking up to complete darkness. The power has gone out!"
+    puts "When you were eating the room fell into complete darkness. The power has gone out!"
     sleep(0.3)
     puts "To turn it back on, head to the controlroom"
     listener
-    if $room == "controlroom"
-        puts "It looks like the blue cable is broken"
-        puts "Open the instruction book to find out how to fix it"
+    while $room != "controlroom"
+        puts "You're in the wrong room. Go to the controlroom"
         listener
-        while $opened_instructions == false
-            listener
-        end
-        times_wrong = 0
-        user_input = gets.chomp
-        while user_input != "3J8JKO"
-            puts "Wrong! Try again"
-            times_wrong += 1
-            user_input = gets.chomp
-        end
-        $opened_instructions = false
-        if times_wrong >= 3
-            puts "Hmm... The power still isn't on. Maybe check the other rooms for other broken cables."
-            while $room != "livingroom"
-                listener
-            end
-            puts "There seems to be a broken cable in here as well. You need to fix it."
-            puts "It is not the same colour as the cable in the controlroom. You need to check the instruction book again."
-            while $opened_instructions == false
-                listener
-            end
-            user_input = gets.chomp
-            while user_input != "903KH6"
-                puts "Wrong! Try again"
-                user_input = gets.chomp
-            end
-        end
-        puts "Nice! The power is back on"
-    else
-        #fel room
     end
+    puts "It looks like the blue cable is broken"
+    puts "Open the instruction book to find out how to fix it"
+    listener
+    while $opened_instructions == false
+        listener
+    end
+    times_wrong = 0
+    user_input = gets.chomp
+    while user_input != "3J8JKO"
+        puts "Wrong! Try again"
+        times_wrong += 1
+        user_input = gets.chomp
+    end
+    $opened_instructions = false
+    if times_wrong >= 3
+        puts "Hmm... The power still isn't on. Maybe check the other rooms for other broken cables."            while $room != "livingroom"
+        listener
+    end
+    puts "There seems to be a broken cable in here as well. You need to fix it."
+    puts "It is not the same colour as the cable in the controlroom. You need to check the instruction book again."
+    while $opened_instructions == false
+        listener
+    end
+    user_input = gets.chomp
+    while user_input != "903KH6"
+        puts "Wrong! Try again"
+        user_input = gets.chomp
+    end
+    puts "Nice! The power is back on"
+    
     
 end
 
@@ -329,7 +333,7 @@ def mission5
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
-    while inventory_arr.include?("screwdriver\n") == false
+    while !inventory_arr.include?('screwdriver\n')
         not_in_inventory = true
         puts "You don't have a screwdriver, you should go and get it."
         while $room != "livingroom"
@@ -881,7 +885,8 @@ end
 
 def dead
     puts "You died."
-    puts "to restart..." #fixa sen
+    puts "Credits:"
+    puts "Ellen, Stella, Klara (2B)"
     $game_started = false
     exit
 end
@@ -912,28 +917,40 @@ def listener
         elsif verb == "grab"
             grab_item(noun)
         elsif verb == "write"
-            write_diary
+            if noun == diary
+                write_diary
+            else 
+                puts "You cannot write in #{noun}. You can only write in diary."
+            end
         elsif verb == "read"
             if noun == "map"
                 read_map
             elsif noun == "diary"
                 read_diary
+            else
+                puts "You cannot read #{noun}. You can only read the map or diary."
             end
         elsif verb == "show"
-            show_inventory
+            if noun == "inventory"
+                show_inventory
+            else
+                puts "You cannot show #{noun}. You can only show inventory."
+            end
         elsif verb == "open"
-            open_instructions
-            $opened_instructions = true
+            if noun == "instructions"
+                open_instructions
+                $opened_instructions = true
+            else
+                puts "You cannot open #{noun}. You can only open instructions."
+            end
         end
     elsif user_input == 'q'
         exit
     end
-
 end
 
 
 while $game_started == true
-    p "in the whle llop"
     if $day==0
         intro
         listener
