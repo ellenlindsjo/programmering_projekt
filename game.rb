@@ -16,22 +16,21 @@ def intro
     end
     puts "LIFTOFF!"
     sleep 1
-    puts "Welcome to 'game'!"
+    puts "\nWelcome to 'game'!"
     continue = 0
     while continue != "" && continue != "q"
-        puts "press 'enter' to continue or 'q' and 'enter' to quit the game"
+        puts "\nPress 'enter' to continue or 'q' and 'enter' to quit the game"
         continue = gets.chomp
     end
     if continue == ""
         puts "Enter your name:"
         $name = gets.chomp
-        puts "As the rocket takes off, you think back on the mission you were given. The survival of humanity is in your hands..."
-        sleep(2)
-        puts "Move around the spaceship using words like 'walk', 'grab', 'drop'. The first word is the verb and the last verb is the object affected." 
-        sleep(2)
-        puts "For example: 'walk bedroom' and 'walk to the bedroom' will take you to the bedroom. 'grab pen' adds 'pen' to your inventory. 'drop pen' removes 'pen' from your inventory."
-        sleep(2)
-        puts "Enter 'show inventory' to show inventory"
+        puts "\nAs the rocket takes off, you think back on the mission you were given.\nThe survival of humanity is in your hands..." #Ska vi förklara mer?
+        sleep(4)
+        puts "\nMove around the spaceship using words like 'walk', 'grab', 'drop."
+        puts "The first word is the verb and the last verb is the object affected." 
+        sleep(4)
+        puts "\nFor example: \n'walk bedroom' and 'walk to the bedroom' will take you to the bedroom. \n'grab waterbottle' adds 'waterbottle' to your inventory. \n'drop waterbottle' removes 'waterbottle' from your inventory. \n'open inventory' to show inventory. \n'open instruction' to read the instruction book. \n'write diary' to write in your diary. \n'read diary' to read your diary."
     elsif continue == "q"
         $game_started = false
         exit
@@ -102,13 +101,17 @@ def action_noun(prompt)
         return "ducttape"
     elsif noun == "catfood"
         return "catfood"
+    elsif noun == "chewinggum"
+        return "chewinggum"
+    elsif noun == "waterbottle"
+        return "waterbottle"
     else
-        puts "#{noun} is not an item you can use. Please write a valid noun and make sure it's the last word."
+        puts "#{noun} is not an item or a room. Please write a valid noun and make sure it's the last word."
     end
 end
 
 def grab_item(item)
-    if File.readlines("programmering_projekt/inventory.txt").length <= 7
+    if File.readlines("programmering_projekt/inventory.txt").length <= 4 && File.readlines("programmering_projekt/inventory.txt").include?(item + "\n")
         File.open("programmering_projekt/inventory.txt", "a"){|f| f.write(item,"\n")}
     else
         puts "Your inventory is full."
@@ -143,8 +146,6 @@ def rooms(destination)
         puts "You are in the control room. Here you can control the ship, as well as receiving and sending messages. "
     elsif $room == "bathroom"
         puts "You are in the bathroom. Here you can find your medicine supply."
-    else 
-        puts "#{$room} is not a room that you can walk to."
     end
 end
 
@@ -192,10 +193,10 @@ end
 #svårare elvation 
 #kanske kolla rum
 def mission1
-    puts "The first thing you notice as you leave the atmosphere is a message from earth: “Dear #{$name}, make sure to set the right course for the spaceship by entering the right answer to this equation: 2x + 3 = 7”"
+    puts "\nThe first thing you notice as you leave the atmosphere is a message from earth: \n\nDear #{$name}, make sure to set the right course for the spaceship by entering the right answer to this equation:\n\n 2x + 3 = 7\n"
     user_input = gets.chomp
     while user_input.to_i.to_s != user_input
-        puts "Please write a number, integer or float."
+        puts "\nPlease write a number, integer or float.\n"
         user_input = gets.chomp
     end
     if user_input == "2"
@@ -205,12 +206,12 @@ def mission1
         $course = false
         $course_value = user_input.to_i
     end
-    puts "You have succesfully set a course for the spaceship."
+    puts "\nYou have succesfully set a course for the spaceship.\n"
 end
 
 #äta
 def mission2
-    puts "*Growl*... You must be hungry after the trip to outer space, go to the kitchen and eat something!"
+    puts "\n*Growl*... You must be hungry after the trip to outer space, go to the kitchen and eat something!\n"
     while $times_eaten == 0
         p "waiting"
         listener
@@ -219,23 +220,23 @@ end
 
 #dekryptera meddelande från aliens
 def mission3
-    puts "You have recieved another message, but this time from the aliens. To read the message you have to use Caesar chipher -3 to decrypt it: 'zh kdyh brxu dqvzhu'"
+    puts "\nYou have recieved another message, but this time from the aliens.\nTo read the message you have to use Caesar chipher -3 to decrypt it: \n\nzh kdyh brxu dqvzhu\n"
     user_input = gets.chomp
     if user_input == "we have your answer"
-        puts "That's correct"
+        puts "\nThat's correct\n"
     else
-        puts "Try again, here's some help:"
-        puts "abcdefghijklmnopqrstuvwxyz"
+        puts "\nTry again, here's some help:\n"
+        puts "\nabcdefghijklmnopqrstuvwxyz\n"
         user_input = gets.chomp
         if user_input == "we have your answer"
-            puts "That's correct"
+            puts "\nThat's correct\n"
         else
-            puts "Try again... last try"
+            puts "\nTry again... last try\n"
             user_input = gets.chomp
             if user_input == "we have your answer"
-                puts "That's correct"
+                puts "\nThat's correct\n"
             else 
-                puts "Oh no! The aliens are mad and sent a missil right at your spaceship!"
+                puts "\nOh no! The aliens are mad and sent a missil right at your spaceship!\n"
                 puts "*KABOOM*"
                 dead
             end
@@ -245,16 +246,16 @@ end
 
 #fixa strömmen
 def mission4
-    puts "When you were eating the room fell into complete darkness. The power has gone out!"
+    puts "\nWhen you were eating the room fell into complete darkness. The power has gone out!"
     sleep(0.3)
-    puts "To turn it back on, head to the controlroom"
+    puts "To turn it back on, head to the controlroom\n"
     listener
     while $room != "controlroom"
-        puts "You're in the wrong room. Go to the controlroom"
+        puts "You're in the wrong room. Go to the controlroom\n"
         listener
     end
-    puts "It looks like the blue cable is broken"
-    puts "Open the instruction book to find out how to fix it"
+    puts "It looks like the blue cable is broken\n"
+    puts "Open the instruction book to find out how to fix it\n"
     listener
     while $opened_instructions == false
         listener
@@ -262,45 +263,50 @@ def mission4
     times_wrong = 0
     user_input = gets.chomp
     while user_input != "3J8JKO"
-        puts "Wrong! Try again"
+        puts "\nWrong! Try again\n"
         times_wrong += 1
         user_input = gets.chomp
     end
     $opened_instructions = false
     if times_wrong >= 3
-        puts "Hmm... The power still isn't on. Maybe check the other rooms for other broken cables."            while $room != "livingroom"
-        listener
-    end
-    puts "There seems to be a broken cable in here as well. You need to fix it."
-    puts "It is not the same colour as the cable in the controlroom. You need to check the instruction book again."
-    while $opened_instructions == false
-        listener
-    end
-    user_input = gets.chomp
-    while user_input != "903KH6"
-        puts "Wrong! Try again"
+        puts "\nHmm... The power still isn't on. Maybe check the other rooms for other broken cables.\n"            
+        while $room != "livingroom"
+            listener
+        end
+        puts "\nThere seems to be a broken cable in here as well. You need to fix it.\n"
+        puts "\nIt is not the same colour as the cable in the controlroom. You need to check the instruction book again.\n"
+        while $opened_instructions == false
+            listener
+        end
         user_input = gets.chomp
+        while user_input != "903KH6"
+            puts "\nWrong! Try again\n"
+            user_input = gets.chomp
+        end
     end
-    puts "Nice! The power is back on"
+    puts "\nNice! The power is back on\n"
     
     
 end
 
 #trasig antenn
 def mission5
-    puts "Oh no! A meteor has hit your antenna and destroyed your message signal."
-    puts "To fix the antenna you have to take a space walk."
-    puts "Go to the living room to access the tools needed for the mission"
+    puts "Oh no! A meteor has hit your antenna and destroyed your message signal.\n"
+    puts "To fix the antenna you have to take a space walk.\n"
+    puts "Go to the living room to access the tools needed for the mission\n"
     while $room != "livingroom"
         listener
     end
-    puts "You need a code to unlock the toolbox."
-    listener
+    puts "You need a code to unlock the toolbox.\n"
+    $opened_instructions = false
+    while !$opened_instructions
+        listener
+    end
     user_input = gets.chomp
     while user_input != "8595"
         user_input = gets.chomp
     end
-    puts "Here's the toolbox:"
+    puts "Here's the toolbox:\n"
     puts "Hammer"
     puts "Screwdriver" #behövs
     puts "Crowbar"
@@ -310,140 +316,138 @@ def mission5
     puts "Spaghetti" #behövs
     puts "Ducttape" #behövs
     puts "Catfood"
-    puts "You can pick up five things to put in your inventory. When you have everything you need, write 'close' to close the toolbox"
-    listener
-    listener
-    listener
-    listener
-    listener
-    puts "Your inventory is full!"
-    user_input = gets.chomp
-    while user_input != "close"
-        user_input = gets.chomp
+    puts "\nYou can pick up five things to put in your inventory. \nWhen you have everything you need, write 'close' to close the toolbox\n"
+    $close = false
+    while !$close
+        listener
     end
-    puts "Go to the controlroom to begin your spacewalk"
+    puts "Go to the controlroom to begin your spacewalk\n"
     while $room != "controlroom"
         listener
     end
-    puts "While in the controlroom, you put on your spacesuit and prepare yourself for the mission. Then you start making your way towards the top of the spaceship, as the endless darkness surrounds you."
-    puts "There are a few loose screws at the bottom of the antenna. Use the appropriate tool to fix it"
+    puts "While in the controlroom, you put on your spacesuit and prepare yourself for the mission. \nThen you start making your way towards the top of the spaceship, \nas the endless darkness surrounds you."
+    puts "\nThere are a few loose screws at the bottom of the antenna. Which tool from the toolbox would be appropriate to use?"
     user_input = gets.chomp
     while user_input != "screwdriver"
         puts "Wrong item"
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
-    while !inventory_arr.include?('screwdriver\n')
+    while !inventory_arr.include?("screwdriver\n")
+        p "inventory_arr: #{inventory_arr}"
         not_in_inventory = true
-        puts "You don't have a screwdriver, you should go and get it."
+        puts "\nYou don't have a screwdriver, you should go and get it.\n"
         while $room != "livingroom"
             listener
         end
         listener
+        inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     end
     if not_in_inventory
-        puts "You put your spacesuit back on and head outside."
-        puts "Now maybe you have the right tool."
+        puts "\nYou put your spacesuit back on and head outside."
+        puts "Now maybe you have the right tool.\n"
         user_input = gets.chomp
         while user_input != "screwdriver"
-            puts "Wrong item"
+            puts "\nWrong item\n"
             user_input = gets.chomp
         end
     end
     not_in_inventory = false
-    puts "Good work!"
-    puts "However, the top of the antenna seems to be broken as well... maybe you have something that could replace it?"
+    puts "Good work!\n"
+    puts "\nHowever, the top of the antenna seems to be broken as well... \nmaybe you have something that could replace it?\n"
     user_input = gets.chomp
     while user_input != "spaghetti"
-        puts "Wrong item"
+        puts "Wrong item\n"
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     while inventory_arr.include?("spaghetti\n") == false
         not_in_inventory = true
-        puts "You don't have the spaghetti, you should go and get it."
+        puts "You don't have the spaghetti, you should go and get it.\n"
         while $room != "livingroom"
             listener
         end
         listener
+        inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     end
     if not_in_inventory
-        puts "You put your spacesuit back on and head outside."
-        puts "Now maybe you have the right tool."
+        puts "You put your spacesuit back on and head outside.\n"
+        puts "Now maybe you have the right tool.\n"
         user_input = gets.chomp
         while user_input != "spaghetti"
-            puts "Wrong item"
+            puts "\nWrong item\n"
             user_input = gets.chomp
         end
     end
     not_in_inventory = false
-    puts "Who knew spaghetti could be so useful?"
-    puts "Now you need something to attach it with."
+    puts "Who knew spaghetti could be so useful?\n"
+    puts "Now you need something to attach it with.\n"
     user_input = gets.chomp
     while user_input != "ducttape"
-        puts "Wrong item"
+        puts "\nWrong item\n"
         user_input = gets.chomp
     end
     inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     while inventory_arr.include?("ducttape\n") == false
         not_in_inventory = true
-        puts "You don't have ducttape, you should go and get it."
+        puts "You don't have ducttape, you should go and get it.\n"
         while $room != "livingroom"
             listener
         end
         listener
+        inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     end
     if not_in_inventory
-        puts "You put your spacesuit back on and head outside."
-        puts "Now maybe you have the right item."
+        puts "You put your spacesuit back on and head outside.\n"
+        puts "Now maybe you have the right item.\n"
         user_input = gets.chomp
         while user_input != "ducttape"
-            puts "Wrong item"
+            puts "\nWrong item\n"
             user_input = gets.chomp
         end
     end
     puts "*beep beep*"
-    puts "The antenna is now working again!"
+    puts "The antenna is now working again!\n"
 end
 
 def mission6
-    puts "There's a new message from the aliens! Hurry to the control room to view it."
+    puts "There's a new message from the aliens! Hurry to the control room to view it.\n"
     while $room != "controlroom"
         listener
     end
-    puts "I'm not alive, but I can grow. I don't have lungs, but I need air. I don't have a mouth, but water kills me. What am I?"
-    puts "You have three tries"
+    puts "I'm not alive, but I can grow. \nI don't have lungs, but I need air. \nI don't have a mouth, but water kills me. \n\nWhat am I?"
+    puts "\nYou have three tries\n"
     user_input = gets.chomp
     i = 0
     while user_input != "fire" && i<=3
         if i==1
-            puts "Wrong answer, two tries left"
+            puts "Wrong answer, two tries left\n"
         elsif i==2
-            puts "Wrong answer, one try left"
+            puts "Wrong answer, one try left\n"
         end
         user_input = gets.chomp
         if i==1
-            puts "Hint: It's important for survival."
+            puts "Hint: It's important for survival.\n"
         elsif i==2
-            puts "Hint: The answer is one of the four elements."
+            puts "Hint: The answer is one of the four elements.\n"
         elsif i==3
-            puts "*PEW PEW*"
-            puts "You failed and the aliens shot laser at your spaceship"
+            puts "\n*PEW PEW*\n"
+            puts "You failed and the aliens shot laser at your spaceship\n"
             dead
         end
         i+=1
     end
-    puts "Fire! That's correct!"
+    puts "Fire! That's correct!\n"
 end
 
 def mission7
-    puts "Ouch! You accidently cut your arm on a rusty nail sticking out out the wall."
-    puts "You'll probably need a band-aid. Where are those again?"
+    puts "Ouch! You accidently cut your arm on a rusty nail sticking out out the wall.\n"
+    puts "You'll probably need a band-aid. Where are those again?\n"
     while $room != "bathroom"
         listener
     end
-    puts "First, to make sure the cut is clean you wash your arm."
-    puts "Now hurry to grab a band-aid from the medicine cabinet before the cut gets infected!"
+    puts "First, to make sure the cut is clean you wash your arm.\n"
+    puts "Now hurry to grab a band-aid from the medicine cabinet before the cut gets infected!\n"
     start = Time.now
     user_input = gets.chomp
     while user_input != "open cabinet"
@@ -451,11 +455,11 @@ def mission7
     end
     stop = Time.now
     if stop-start > 30
-        puts "You were too slow and the cut got infected."
+        puts "\nYou were too slow and the cut got infected.\n"
         dead
     end
-    puts "Phew, that was close.."
-    puts "Now quick! Grab the band-aid"
+    puts "Phew, that was close..\n"
+    puts "Now quick! Grab the band-aid\n"
     start = Time.now
     user_input = gets.chomp
     while user_input != "grab band-aid"
@@ -463,25 +467,25 @@ def mission7
     end
     stop = Time.now
     if stop-start > 30
-        puts "You were too slow and the cut got infected."
+        puts "\nYou were too slow and the cut got infected.\n"
         dead
     end
     puts "Great!"
-    puts "You managed to avoid getting tetanus!"
+    puts "You managed to avoid getting tetanus!\n"
 end
 
 def mission8
     times_hit = 0
-    puts "Suddenly you feel the spaceship starting to shake..."
+    puts "Suddenly you feel the spaceship starting to shake...\n"
     puts "*BONK*"
     puts "What was that?"
     puts "*BONK BONK*"
     puts "IT'S A METEOR RAIN!"
-    puts "You have to manually steer the ship to avoid getting hit!"
+    puts "You have to manually steer the ship to avoid getting hit!\n"
     while $room != "controlroom"
         listener
     end
-    puts "The meteors are coming from different directions."
+    puts "The meteors are coming from different directions.\n"
     puts "When from north, steer south, and vice versa"
     puts "When from east, steer west, and vice versa"
     sleep(5)
@@ -494,7 +498,7 @@ def mission8
         if stop-start > 10
             puts "*BONK*"
             puts "You got hit!"
-            puts "Try to avoid that"
+            puts "Try to avoid that\n"
             times_hit +=1  
         end
         if times_hit >= 3
@@ -815,7 +819,8 @@ end
 
 #om fel kurs
 def extra_mission1
-    puts "Another day, another message from earth: 'It seams like the course you set was wrong! Fortunetly you get another chance by answering this equation: (x^2)^(1/2) = 4'"
+    puts "Another day, another message from earth: 'It seams like the course you set was wrong!" 
+    puts "Fortunately you get another chance by answering this equation: (x^2)^(1/2) = 4"
     user_input = gets.chomp
     if user_input == "4"
         $course_retry = true
@@ -824,6 +829,7 @@ def extra_mission1
         $course_retry = false
         $course_retry_value = user_input.to_i
     end
+    puts "Nice! You set the course."
 end
 
 def miss_planet
@@ -944,6 +950,8 @@ def listener
                 puts "You cannot open #{noun}. You can only open instructions."
             end
         end
+    elsif user_input == "close"
+        $close = true
     elsif user_input == 'q'
         exit
     end
