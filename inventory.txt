@@ -1,4 +1,2 @@
 chewinggum
-crowbar
-banana
-screwdriver
+waterbottle
