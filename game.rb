@@ -1,5 +1,5 @@
 #variables
-$day = 0 
+$day = 0
 $game_started = true
 $times_slept = 0
 $times_eaten = 0
@@ -478,6 +478,9 @@ def mission5
     sleep(2)
 end
 
+#Beskrivning: Funktionen innehåller en while-loop som använder den globala variabeln "room" och anropar funktionen "listener". Den har även en while-loop som jämför variabeln "user_input" med användarens input. 
+#Argument: Funktionen tar inte in några argument
+#Return: Funktionern retunerar inget
 def mission6
     puts "\nThere's a new message from the aliens! Hurry to the control room to view it.\n"
     while $room != "controlroom"
@@ -495,9 +498,7 @@ def mission6
     user_input = gets.chomp
     i = 0
     while user_input != "fire" && i<=2
-        p "in the while lopo"
         if i==0
-            p "in the i==0"
             puts "Wrong answer, two tries left\n"
         elsif i==1
             puts "Wrong answer, one try left\n"
@@ -954,7 +955,7 @@ def mission13
     puts "\nWow, that must be the aliens' planet!"
     sleep(2)
     puts "\nYou have gotten a new message from the aliens."
-    while $room != controlroom
+    while $room != "controlroom"
         listener
     end
     puts "\nWe see that you are nearby now and can see our planet."
@@ -982,91 +983,91 @@ end
 
 def miss_planet
     puts "\nYou drift closer and closer to the aliens' planet, but."
-    sleep(1)
+    sleep(3)
     puts "\nSuddenly you realize that you set the wrong course all those days ago, and that now you won't be able to get to the aliens."
-    sleep(1)
+    sleep(3)
     puts "\nWhat a waste of time..."
-    sleep(1)
+    sleep(3)
     puts "\nYou drift off into complete darkness..."
-    sleep(1)
+    sleep(3)
     puts "\nAfter a few days the food runs out..."
-    sleep(1)
+    sleep(3)
     puts "\nSome hours after that there's no more oxygen left..."
     dead
 end
 
 def black_hole
     puts "\nThis doesn't feel right..."
-    sleep(1)
+    sleep(2)
     puts "\nIt almost feels like the spaceship is being pulled towards something"
-    sleep(1)
+    sleep(3)
     puts "\nOH NO! It's a black ho-"
     dead
 end
 
 def arrive
     puts "\nThe spaceship turns slightly as you can see the planet getting closer and closer."
-    sleep(1)
+    sleep(3)
     puts "\nYou have gone into orbit and start preparing to enter the atmosphere."
-    sleep(1)
+    sleep(3)
     puts "\n*ROAROOOMMMM!*"
-    sleep(1)
+    sleep(2)
     puts "\nThere's fire outside the windows as velocity increases."
-    sleep(1)
+    sleep(3)
     puts "\n*WHOOOOOSSHH!*"
-    sleep(1)
+    sleep(2)
     puts "\nThe #{$color} surface is approaching rapidly and you begin to wonder what you'll actually find down there."
-    sleep(1)
+    sleep(3)
     puts "\nIf you make the landing, that is."
-    sleep(1)
+    sleep(2)
     puts "\n*BEEP BEEP*"
-    sleep(1)
+    sleep(2)
     puts "\nVarious warning sounds and lights are on, but now there's nothing left do to but hope."
     if $color == "red" || $color == "yellow" || $color == "blue"
         puts "\nYes! You managed to dock on the new planet."
-        sleep(1)
+        sleep(3)
         puts "\nYou get ready to present yourself to the aliens."
-        sleep(1)
+        sleep(3)
         puts "\nYou walk out of your spaceship and go up to the aliens."
-        sleep(1)
+        sleep(3)
         puts "\n'Hello, I'm from planet Earth' you say."
-        sleep(1)
+        sleep(3)
         puts "\nBut the aliens don't respond directly..."
-        sleep(1)
+        sleep(3)
         puts "\nAnd they don't look very kind..."
-        sleep(1)
+        sleep(3)
         puts "\nAll of a sudden they grab ahold of you and drag you away from your ship!"
-        sleep(1)
+        sleep(3)
         puts "\nYou struggle, realising that the aliens never wanted to help you."
-        sleep(1)
+        sleep(3)
         puts "\nThey were only out to hurt you!"
-        sleep(1)
+        sleep(3)
         puts "\nAs they throw you into a cell you think about how humanity could ever be so gullible."
         dead
     elsif $color == "green"
         puts "\nYou brace for landing, waiting for the ship to slow down."
-        sleep(1)
+        sleep(3)
         puts "\nBut the ship is not slowing down..."
-        sleep(1)
+        sleep(3)
         puts "\nIt really should have slowed down by now..."
-        sleep(1)
+        sleep(3)
         puts "\nCRASH!!!"
         dead
     elsif $color == "orange" || $color == "purple"
         puts "\nYes! You managed to dock on the new planet."
-        sleep(1)
+        sleep(3)
         puts "\nYou get ready to present yourself to the aliens."
-        sleep(1)
+        sleep(3)
         puts "\nYou walk out of your spaceship and go up to the aliens."
-        sleep(1)
+        sleep(3)
         puts "\n'Hello, I'm from planet Earth' you say."
-        sleep(1)
+        sleep(3)
         puts "\n'Hello, we are so excited to meet you!' an alien responded warmly."
-        sleep(1)
+        sleep(3)
         puts "\nYou were led to a modern office and exchange knowledge that can save both the aliens and humans."
-        sleep(1)
+        sleep(3)
         puts "\nTHE END"
-        sleep(1)
+        sleep(2)
         puts "\nCredits:"
         sleep(1)
         puts "\nEllen, Stella, Klara (2B)"
@@ -1076,7 +1077,7 @@ end
 def dead
     sleep(1)
     puts "You died."
-    sleep(1)
+    sleep(2)
     puts "Credits:"
     puts "Ellen, Stella, Klara (2B)"
     $game_started = false
