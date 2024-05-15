@@ -17,7 +17,7 @@ def intro
     end
     puts "LIFTOFF!"
     sleep 1
-    puts "\nWelcome to 'game'!"
+    puts "\nWelcome to Elstellara's Cosmic Adventure!"
     continue = 0
     while continue != "" && continue != "q"
         puts "\nPress 'enter' to continue or 'q' and 'enter' to quit the game"
@@ -158,6 +158,9 @@ def grab_item(item)
     end
 end
 
+#Beskrivning: Funktionen tar in en sträng som den konkatenerar med en annan sträng. Den tar bort två strängar från textfilen inventory.txt om de finns med. 
+#Argument: String - I samband med resten av programmet är det sista ordet av en sträng som skickats in av användaren. 
+#Exempel: drop_item("screwdriver") Om screwdriver finns med i inventory.txt på en egen rad tas den raden bort. Annars händer ingenting. 
 def drop_item(item)
     item2 = item + "\n"
     a = File.readlines('programmering_projekt/inventory.txt')
@@ -578,49 +581,48 @@ def mission8
     start = Time.now
     user_input = gets.chomp
     while user_input != "west"
-        stop = Time.now
-        if stop-start > 10
-            puts "\n*BONK*"
-            sleep(0.5)
-            puts "You got hit!"
-            sleep(1)
-            puts "Try to avoid that\n"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "\nOh no! Too many meteors have damaged the ship!"
-            sleep(2)
-            puts "\n*KABOOM*"
-            sleep(1)
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
     end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
+    end
+
     #meteor 2
     sleep(3)
     puts "north"
     start = Time.now
     user_input = gets.chomp
     while user_input != "south"
-        stop = Time.now
-        if stop-start > 10
-            puts "\n*BONK*"
-            sleep(0.5)
-            puts "You got hit!"
-            sleep(1)
-            puts "Try to avoid that\n"
-            times_hit +=1 
-        end
-        if times_hit >= 3
-            puts "\nOh no! Too many meteors have damaged the ship!"
-            sleep(2)
-            puts "\n*KABOOM*"
-            sleep(1)
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     #meteor 3
     sleep(6)
@@ -628,24 +630,23 @@ def mission8
     start = Time.now
     user_input = gets.chomp
     while user_input != "north"
-        stop = Time.now
-        if stop-start > 10
-            puts "\n*BONK*"
-            sleep(0.5)
-            puts "You got hit!"
-            sleep(1)
-            puts "Try to avoid that\n"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "\nOh no! Too many meteors have damaged the ship!"
-            sleep(2)
-            puts "\n*KABOOM*"
-            sleep(1)
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     #meteor 4
     sleep(2)
@@ -653,49 +654,47 @@ def mission8
     start = Time.now
     user_input = gets.chomp
     while user_input != "north"
-        if stop-start > 10
-            puts "\n*BONK*"
-            sleep(0.5)
-            puts "You got hit!"
-            sleep(1)
-            puts "Try to avoid that\n"
-            times_hit +=1 
-        end
-        if times_hit >= 3
-            puts "\nOh no! Too many meteors have damaged the ship!"
-            sleep(2)
-            puts "\n*KABOOM*"
-            sleep(1)
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
     end
-
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
+    end
     #meteor 5
     sleep(3)
     puts "west"
+    start = Time.now
+    user_input = gets.chomp
     while user_input != "east"
-        start = Time.now
-        user_input = gets.chomp 
-        stop = Time.now
-        if stop-start > 5
-            puts "\n*BONK*"
-            sleep(0.5)
-            puts "You got hit!"
-            sleep(1)
-            puts "Try to avoid that\n"
-            times_hit +=1 
-        end
-        if times_hit >= 3
-            puts "\nOh no! Too many meteors have damaged the ship!"
-            sleep(2)
-            puts "\n*KABOOM*"
-            sleep(1)
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     sleep(2)
     puts "\nGood job! You made it through the meteor rain."
@@ -725,11 +724,12 @@ def mission9
             listener
         end
         listener
+        inventory_arr = File.readlines('programmering_projekt/inventory.txt')
     end
     if not_in_inventory
         puts "\nNow maybe you have the right item. Go back and test it."
         while $room != "kitchen"
-            listenerr
+            listener
         end
         user_input = gets.chomp
         while user_input != "rubberduck"
@@ -817,6 +817,7 @@ def mission11
 end
 
 def mission12
+    times_hit = 0
     puts "*BONK BONK*"
     sleep(1)
     puts "\nNot again!"
@@ -829,119 +830,142 @@ def mission12
     start = Time.now
     user_input = gets.chomp
     while user_input != "north"
-        stop = Time.now
-        if stop-start > 10
-            puts "*BONK*"
-            puts "You got hit!"
-            puts "Try to avoid that"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "Oh no! Too many meteors have damaged the ship!"
-            puts "*KABOOM*"
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     #meteor 2
     puts "west"
     start = Time.now
     user_input = gets.chomp
     while user_input != "east"
-        stop = Time.now
-        if stop-start > 10
-            puts "*BONK*"
-            puts "You got hit!"
-            puts "Try to avoid that"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "Oh no! Too many meteors have damaged the ship!"
-            puts "*KABOOM*"
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     #meteor 3
     puts "south"
     start = Time.now
     user_input = gets.chomp
     while user_input != "north"
-        stop = Time.now
-        if stop-start > 10
-            puts "*BONK*"
-            puts "You got hit!"
-            puts "Try to avoid that"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "Oh no! Too many meteors have damaged the ship!"
-            puts "*KABOOM*"
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
+    end
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
     end
     #meteor 4
     puts "east"
     start = Time.now
     user_input = gets.chomp
     while user_input != "west"
-        if stop-start > 10
-            puts "*BONK*"
-            puts "You got hit!"
-            puts "Try to avoid that"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "Oh no! Too many meteors have damaged the ship!"
-            puts "*KABOOM*"
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
     end
-
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
+    end
     #meteor 5
     puts "south"
+    start = Time.now
+    user_input = gets.chomp
     while user_input != "north"
-        start = Time.now
-        user_input = gets.chomp stop = Time.now
-        if stop-start > 5
-            puts "*BONK*"
-            puts "You got hit!"
-            puts "Try to avoid that"
-            times_hit +=1  
-        end
-        if times_hit >= 3
-            puts "Oh no! Too many meteors have damaged the ship!"
-            puts "*KABOOM*"
-            dead
-        end
         user_input = gets.chomp
-        start = Time.now
     end
-    puts "Nice! You made it through another meteor rain."
-    puts "Hopefully, it was the last one."
+    stop = Time.now
+    if stop-start > 10
+        puts "\n*BONK*"
+        sleep(0.5)
+        puts "You got hit!"
+        sleep(1)
+        puts "Try to avoid that\n"
+        times_hit +=1  
+    end
+    if times_hit >= 3
+        puts "\nOh no! Too many meteors have damaged the ship!"
+        sleep(2)
+        puts "\n*KABOOM*"
+        sleep(1)
+        dead
+    end
+    if times_hit > 0
+        $hit = true
+    end
+    puts "\nNice! You made it through another meteor rain."
+    sleep(1)
+    puts "\nHopefully, it was the last one."
 end
 
-def mission13 
-    puts "You look outside the window and see a huge sphere before you."
-    puts "Wow, that must be the aliens' planet!"
-    puts "You have gotten a new message from the aliens."
+def mission13
+    puts "\nYou look outside the window and see a huge sphere before you."
+    sleep(2)
+    puts "\nWow, that must be the aliens' planet!"
+    sleep(2)
+    puts "\nYou have gotten a new message from the aliens."
     while $room != controlroom
         listener
     end
-    puts "We see that you are nearby now and can see our planet."
-    puts "Which one of the primary- or their complementary colours is our planet?"
+    puts "\nWe see that you are nearby now and can see our planet."
+    sleep(2)
+    puts "\nWhich one of the primary- or their complementary colours is our planet?"
     $color = gets.chomp
     puts "Okay..."
 end
 
 #om fel kurs
-def extra_mission1
+def extra_mission
     puts "Another day, another message from earth: \nIt seams like the course you set was wrong!"
     sleep(1) 
     puts "\nFortunately you get another chance by answering this equation: (x^2)^(1/2) = 4"
@@ -1060,7 +1084,6 @@ def dead
 end
 
 
-
 def listener
     user_input = gets.chomp
     if user_input == 'eat'
@@ -1161,7 +1184,7 @@ while $game_started == true
         end
     elsif $day==3
         if $course == false
-            extra_mission1
+            extra_mission
         end
         mission5
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
@@ -1207,14 +1230,13 @@ while $game_started == true
     elsif $day==6
         if $hit
             mission12
-        else
-            mission13
         end
         puts "*Growl*... You must be hungry, go to the kitchen and eat something!"
         $hungry = true
         while $times_eaten == 5
             listener
         end
+        mission13
         puts "You're beginning to feel sleepy. Head to the bedroom to sleep."
         $tired = true
         while $times_slept == 6
